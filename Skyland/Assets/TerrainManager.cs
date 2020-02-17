@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TerrainManager : MonoBehaviour
 {
-    public GameObject go_dessert1;
+    public GameObject go_dessert1, go_playerPrefab;
     public Transform tf_player, tf_chunkParent;
 
-    public int i_terrainSizeX;
-    public int i_terrainSizeY;
-    public float f_scale;
+    public int i_terrainSizeX, i_terrainSizeY, i_worldOffset;
+    public float f_scaleMeter;
+
 
     public Vector2Int v2_playerChunk;
     GameObject[] goA_playerZone;
@@ -21,6 +21,8 @@ public class TerrainManager : MonoBehaviour
     {
         v2_playerChunk = new Vector2Int(0, 0);
         goA_playerZone = new GameObject[9];
+
+        initializePlayer();
 
         MakeInitialZone();
     }
@@ -42,7 +44,7 @@ public class TerrainManager : MonoBehaviour
             case 1:
                 UpdatePlayerZone(North, North.Length);
                 break;
-            case 2:          
+            case 2:
                 UpdatePlayerZone(East, 1);
                 break;
             case 3:
@@ -59,7 +61,7 @@ public class TerrainManager : MonoBehaviour
     {
         for (int i = 0; i < code.Length; i++)
         {
-            goA_playerZone[code[i]].SetActive(false);
+            //goA_playerZone[code[i]].SetActive(false);
             goA_playerZone[code[i]] = goA_playerZone[code[i] + increment];
             goA_playerZone[code[i] + increment] = goA_playerZone[code[i] + (increment * 2)];
         }
@@ -70,25 +72,25 @@ public class TerrainManager : MonoBehaviour
         float ppX = tf_player.position.x;
         float ppY = tf_player.position.z;
 
-        if (ppY > (v2_playerChunk.y + 1) * i_terrainSizeY * f_scale)
+        if (ppY > (v2_playerChunk.y + 1) * i_terrainSizeY * f_scaleMeter)
         {
             // North
             v2_playerChunk.y++;
             Move(1);
         }
-        if (ppX > (v2_playerChunk.x + 1) * i_terrainSizeX * f_scale)
+        if (ppX > (v2_playerChunk.x + 1) * i_terrainSizeX * f_scaleMeter)
         {
             // East
             v2_playerChunk.x++;
             Move(2);
         }
-        if (ppY < v2_playerChunk.y * i_terrainSizeY * f_scale)
+        if (ppY < v2_playerChunk.y * i_terrainSizeY * f_scaleMeter)
         {
             // South
             v2_playerChunk.y--;
             Move(3);
         }
-        if (ppX < (v2_playerChunk.x) * i_terrainSizeX * f_scale)
+        if (ppX < (v2_playerChunk.x) * i_terrainSizeX * f_scaleMeter)
         {
             // West
             v2_playerChunk.x--;
@@ -96,21 +98,27 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
+    void initializePlayer()
+    {
+        GameObject player = Instantiate(go_playerPrefab, new Vector3(i_terrainSizeX * i_worldOffset * f_scaleMeter, 500, i_terrainSizeY * i_worldOffset * f_scaleMeter), Quaternion.identity) as GameObject;
+        tf_player = player.transform;
+    } 
+
     void MakeInitialZone()
     {
-        //int initialChunkGridSize = 5;
-        
-        //// Initialize first x amount of chunks
-        //for (int y = -initialChunkGridSize; y < initialChunkGridSize; y++)
-        //{
-        //    for (int x = -initialChunkGridSize; x < initialChunkGridSize; x++)
-        //    {
-        //        InstandGO(x, y).SetActive(false);
-        //    }
-        //}
+        int initialChunkGridSize = 10;
+
+        // Initialize first x amount of chunks
+        for (int y = -initialChunkGridSize; y < initialChunkGridSize; y++)
+        {
+            for (int x = -initialChunkGridSize; x < initialChunkGridSize; x++)
+            {
+                InstandGO(x, y);//.SetActive(false);
+            }
+        }
 
         goA_playerZone[3] = InstandGO(-1, 0);
-        goA_playerZone[4] = InstandGO(0, 0);
+        goA_playerZone[4] = InstandGO(0 , 0);
         goA_playerZone[5] = InstandGO(1, 0);
 
         LoadDir(1);
@@ -119,11 +127,13 @@ public class TerrainManager : MonoBehaviour
 
     GameObject InstandGO(int x, int y)
     {
+        x += i_worldOffset;
+        y += i_worldOffset;
         Vector2Int chunk = new Vector2Int(x, y);
         if (!dict_VisitedChunks.ContainsKey(chunk))
         {
-            GameObject mesh = Instantiate(go_dessert1, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-            mesh.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, x, y, f_scale);
+            GameObject mesh = Instantiate(go_dessert1, new Vector3(0 + (i_terrainSizeX * f_scaleMeter * x), 0, 0 + (i_terrainSizeY * f_scaleMeter * y)), Quaternion.identity) as GameObject;
+            mesh.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, x, y, f_scaleMeter);
 
             // Clean up Hierarchy
             mesh.transform.parent = tf_chunkParent;

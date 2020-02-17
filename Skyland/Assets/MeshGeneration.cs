@@ -7,6 +7,7 @@ public class MeshGeneration : MonoBehaviour
     Mesh mesh;
     Vector3[] v3A_vertices;
     int[] iA_triangles;
+    Vector2[] v2A_uv;
 
     MeshCollider meshcollider;
 
@@ -20,6 +21,8 @@ public class MeshGeneration : MonoBehaviour
     public bool refresh = false;
     public bool gizmos = false;
     int i_sizeX, i_sizeY, i_chunkX, i_chunkY;
+    float f_scale;
+
 
     public float yield;
 
@@ -31,9 +34,11 @@ public class MeshGeneration : MonoBehaviour
         i_chunkX = cx;
         i_chunkY = cy;
 
+        f_scale = scale;
+
         mountainMult = 0;
 
-        transform.localScale = new Vector3(scale, scale, scale);
+        //transform.localScale = new Vector3(scale, scale, scale);
 
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
@@ -46,6 +51,7 @@ public class MeshGeneration : MonoBehaviour
     void CreateMesh()
     {
         v3A_vertices = new Vector3[(i_sizeX + 1) * (i_sizeY + 1)];
+        v2A_uv = new Vector2[(i_sizeX + 1) * (i_sizeY + 1)];
         float p;
         float emX = 0;
         float emY = 0;
@@ -54,9 +60,14 @@ public class MeshGeneration : MonoBehaviour
         float percentageX = i_sizeX / 100 * mountainPercentage;
         float percentageY = i_sizeY / 100 * mountainPercentage;
 
-        for (int y = 0 + (i_sizeY*i_chunkY); y <= i_sizeY + (i_sizeY * i_chunkY); y++)
+        //for (int y = 0 + (i_sizeY * i_chunkY); y <= i_sizeY + (i_sizeY * i_chunkY); y++)
+        //{
+        //    for (int x = 0 + (i_sizeX * i_chunkX); x <= i_sizeX + +(i_sizeX * i_chunkX); x++)
+        //    {
+
+        for (int y = 0; y <= i_sizeY; y++)
         {
-            for (int x = 0 + (i_sizeX * i_chunkX); x <= i_sizeX + +(i_sizeX * i_chunkX); x++)
+            for (int x = 0; x <= i_sizeX; x++)
             {
                 //if (x <= percentageX || x >= (i_sizeX - percentageX) || y <= percentageY || y >= (i_sizeY - percentageY))
                 //{
@@ -91,8 +102,10 @@ public class MeshGeneration : MonoBehaviour
                 {
                     emX = 1;
                 }
-                p = Mathf.PerlinNoise(x * perlinreductor, y * perlinreductor) * (emX * perlinMultiplier) * (perlinMultiplier); //* (Mathf.Sin(Time.time) + 1));
-                v3A_vertices[i] = new Vector3(x, p, y);
+
+                p = Mathf.PerlinNoise(((i_sizeX * i_chunkX) + x) * perlinreductor, ((i_sizeY * i_chunkY) + y) * perlinreductor) * (emX * perlinMultiplier) * (perlinMultiplier * f_scale); //* (Mathf.Sin(Time.time) + 1));
+                v3A_vertices[i] = new Vector3(x * f_scale, p, y * f_scale);
+                v2A_uv[i] = new Vector2(x / (float)i_sizeX, y / (float)i_sizeY);
                 emX = 0;
                 emY = 0;
                 i++;
@@ -101,6 +114,7 @@ public class MeshGeneration : MonoBehaviour
             }
             //Debug.Log(i);
         }
+
 
         iA_triangles = new int[i_sizeX * i_sizeY * 6];
 
@@ -134,6 +148,7 @@ public class MeshGeneration : MonoBehaviour
         mesh.triangles = iA_triangles;
 
         mesh.RecalculateNormals();
+        mesh.uv = v2A_uv;
 
         meshcollider.sharedMesh = mesh;
     }
