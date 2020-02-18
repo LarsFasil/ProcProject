@@ -20,6 +20,7 @@ public class MeshGeneration : MonoBehaviour
 
     public bool refresh = false;
     public bool gizmos = false;
+    [SerializeField]
     int i_sizeX, i_sizeY, i_chunkX, i_chunkY;
     float f_scale;
 
