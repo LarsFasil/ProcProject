@@ -4,26 +4,29 @@ using UnityEngine;
 
 public class TerrainManager : MonoBehaviour
 {
-    public GameObject go_dessert1, go_playerPrefab;
-    public Transform tf_player, tf_chunkParent;
+    [Header("Prefabs")]
+    public GameObject go_dessert1;
+    public GameObject go_playerPrefab;
+    public Transform tf_chunkParent;
 
-    public int i_terrainSizeX, i_terrainSizeY, i_worldOffset;
-    public float f_scaleMeter;
+    [Header("Terrain")]
+    public int i_terrainSizeX;
+    public int i_terrainSizeY, i_worldOffset;
+    public float f_scaleMeter, f_playerStartHeight;
+    public int initialChunkGridSize;
 
+    [Header("Other"),SerializeField]
+    private Vector2Int v2_playerChunk;
+    public Vector2Int v2_playerStartingchunk;
+    public int i_playerzoneSize;
 
-    public Vector2Int v2_playerChunk;
+    Transform tf_player;
     GameObject[] goA_playerZone;
-
     Dictionary<Vector2Int, GameObject> dict_VisitedChunks = new Dictionary<Vector2Int, GameObject>();
 
-
     void Start()
-    {
-        v2_playerChunk = new Vector2Int(0, 0);
-        goA_playerZone = new GameObject[9];
-
+    {      
         initializePlayer();
-
         MakeInitialZone();
     }
 
@@ -100,20 +103,24 @@ public class TerrainManager : MonoBehaviour
 
     void initializePlayer()
     {
-        GameObject player = Instantiate(go_playerPrefab, new Vector3(i_terrainSizeX * i_worldOffset * f_scaleMeter, 500, i_terrainSizeY * i_worldOffset * f_scaleMeter), Quaternion.identity) as GameObject;
+        // Instantiate the player on the startingchunk position.
+        GameObject player = Instantiate(go_playerPrefab, ChunkToPos(v2_playerStartingchunk, true), Quaternion.identity) as GameObject;
         tf_player = player.transform;
+
+        // Set the playerchunk to the players current chunk.
+        v2_playerChunk = v2_playerStartingchunk;
     }
 
     void MakeInitialZone()
     {
-        int initialChunkGridSize = 3;
+        goA_playerZone = new GameObject[i_playerzoneSize];
 
-        // Initialize first x amount of chunks
+        // Initialize first (x*2)^2 amount of chunks
         for (int y = -initialChunkGridSize; y < initialChunkGridSize; y++)
         {
             for (int x = -initialChunkGridSize; x < initialChunkGridSize; x++)
             {
-                InstandGO(x, y);//.SetActive(false);
+                InstandGO(x, y); //.SetActive(false);
             }
         }
 
@@ -182,17 +189,17 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
-    Vector2 ChunkToPos(Vector2Int chunk, bool WorldOffset)
+    Vector3 ChunkToPos(Vector2Int chunk, bool WorldOffset)
     {
-        Vector2 pos;
+        Vector3 pos;
         float calcOffset = i_terrainSizeY * f_scaleMeter * i_worldOffset;
 
-        pos = new Vector2(chunk.x * i_terrainSizeX * f_scaleMeter, chunk.y * i_terrainSizeY * f_scaleMeter);
+        pos = new Vector3(chunk.x * i_terrainSizeX * f_scaleMeter, f_playerStartHeight, chunk.y * i_terrainSizeY * f_scaleMeter);
 
         if (WorldOffset)
         {
             pos.x += calcOffset;
-            pos.y += calcOffset;
+            pos.z += calcOffset;
         }
         return pos;
     }

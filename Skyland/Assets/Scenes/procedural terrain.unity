@@ -153,13 +153,16 @@ MonoBehaviour:
   go_dessert1: {fileID: 6656380443480621522, guid: 6b2cc05bc6194c84f85c3db21ceee411,
     type: 3}
   go_playerPrefab: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
-  tf_player: {fileID: 0}
   tf_chunkParent: {fileID: 1207223494}
-  i_terrainSizeX: 20
-  i_terrainSizeY: 20
+  i_terrainSizeX: 10
+  i_terrainSizeY: 10
   i_worldOffset: 15
-  f_scaleMeter: 2
+  f_scaleMeter: 4
+  f_playerStartHeight: 30.29
+  initialChunkGridSize: 10
   v2_playerChunk: {x: 0, y: 0}
+  v2_playerStartingchunk: {x: 0, y: 0}
+  i_playerzoneSize: 9
 --- !u!4 &1200334909
 Transform:
   m_ObjectHideFlags: 0

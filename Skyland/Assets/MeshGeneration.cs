@@ -110,10 +110,7 @@ public class MeshGeneration : MonoBehaviour
                 emX = 0;
                 emY = 0;
                 i++;
-
-                //yield return new WaitForSeconds(yield);
             }
-            //Debug.Log(i);
         }
 
 
