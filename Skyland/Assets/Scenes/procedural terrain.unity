@@ -162,7 +162,7 @@ MonoBehaviour:
   initialChunkGridSize: 10
   v2_playerChunk: {x: 0, y: 0}
   v2_playerStartingchunk: {x: 0, y: 0}
-  i_playerzoneSize: 9
+  i_playerzoneSize: 12
 --- !u!4 &1200334909
 Transform:
   m_ObjectHideFlags: 0

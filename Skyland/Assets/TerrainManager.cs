@@ -15,17 +15,23 @@ public class TerrainManager : MonoBehaviour
     public float f_scaleMeter, f_playerStartHeight;
     public int initialChunkGridSize;
 
-    [Header("Other"),SerializeField]
+    [Header("Other"), SerializeField]
     private Vector2Int v2_playerChunk;
-    public Vector2Int v2_playerStartingchunk;
+    public Vector2Int v2_playerStartingchunk; // cant be changed yet
     public int i_playerzoneSize;
 
     Transform tf_player;
     GameObject[] goA_playerZone;
     Dictionary<Vector2Int, GameObject> dict_VisitedChunks = new Dictionary<Vector2Int, GameObject>();
 
+    enum direction { North, East, South, West };
+
     void Start()
-    {      
+    {
+        if (i_playerzoneSize % 2 == 0)
+        {
+            i_playerzoneSize++;
+        }
         initializePlayer();
         MakeInitialZone();
     }
@@ -33,41 +39,6 @@ public class TerrainManager : MonoBehaviour
     void Update()
     {
         TrackPlayer();
-    }
-
-    void Move(short dir)
-    {
-        int[] North = { 0, 1, 2 };
-        int[] East = { 0, 3, 6 };
-        int[] South = { 6, 7, 8 };
-        int[] West = { 2, 5, 8 };
-
-        switch (dir)
-        {
-            case 1:
-                UpdatePlayerZone(North, North.Length);
-                break;
-            case 2:
-                UpdatePlayerZone(East, 1);
-                break;
-            case 3:
-                UpdatePlayerZone(South, -South.Length);
-                break;
-            case 4:
-                UpdatePlayerZone(West, -1);
-                break;
-        }
-        LoadDir(dir);
-    }
-
-    void UpdatePlayerZone(int[] code, int increment)
-    {
-        for (int i = 0; i < code.Length; i++)
-        {
-            //goA_playerZone[code[i]].SetActive(false);
-            goA_playerZone[code[i]] = goA_playerZone[code[i] + increment];
-            goA_playerZone[code[i] + increment] = goA_playerZone[code[i] + (increment * 2)];
-        }
     }
 
     void TrackPlayer()
@@ -78,26 +49,106 @@ public class TerrainManager : MonoBehaviour
         if (ppY > ChunkToPos(v2_playerChunk.x, v2_playerChunk.y + 1, true).y)
         {
             // North
-            v2_playerChunk.y++;
-            Move(1);
+            UpdateZone(direction.North);
         }
         if (ppX > ChunkToPos(v2_playerChunk.x + 1, v2_playerChunk.y, true).x)
         {
             // East
-            v2_playerChunk.x++;
-            Move(2);
+            UpdateZone(direction.East);
         }
         if (ppY < ChunkToPos(v2_playerChunk.x, v2_playerChunk.y, true).y)
         {
             // South
-            v2_playerChunk.y--;
-            Move(3);
+            UpdateZone(direction.South);
         }
         if (ppX < ChunkToPos(v2_playerChunk.x, v2_playerChunk.y, true).x)
         {
             // West
-            v2_playerChunk.x--;
-            Move(4);
+            UpdateZone(direction.West);
+        }
+    }
+
+    void UpdateZone(direction dir)
+    {
+        int zoneRatio = (int)(i_playerzoneSize * .5f - .5f);
+        switch (dir)
+        {
+            case direction.North:
+                // Shift contents of all zones 1 zone down starting at the bottem left and skipping the upper row.
+                for (int i = 0; i < i_playerzoneSize; i++)
+                {
+                    for (int j = 0; j < i_playerzoneSize - 1; j++)
+                    {
+                        goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(i_playerzoneSize * (j + 1)) + i];
+                    }
+                }
+                // Add the new row of chunks to the skipped upper zones, creating a new land. 
+                for (int i = 0; i < i_playerzoneSize; i++)
+                {
+                    int newchunkX = v2_playerChunk.x - zoneRatio + i;
+                    int newchunkY = v2_playerChunk.y + zoneRatio + 1;
+
+                    goA_playerZone[((i_playerzoneSize * i_playerzoneSize) - i_playerzoneSize) + i] = InstandGO(newchunkX, newchunkY);
+                }
+                v2_playerChunk.y++;
+                break;
+
+            case direction.East:
+                for (int j = 0; j < i_playerzoneSize; j++)
+                {
+                    for (int i = 0; i < i_playerzoneSize - 1; i++)
+                    {
+                        goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(j * i_playerzoneSize) + i + 1];
+                    }
+                }
+                // New row
+                for (int i = 0; i < i_playerzoneSize; i++)
+                {
+                    int newchunkX = v2_playerChunk.x + zoneRatio + 1;
+                    int newchunkY = v2_playerChunk.y - zoneRatio + i;
+
+                    goA_playerZone[(i_playerzoneSize - 1) + (i * i_playerzoneSize)] = InstandGO(newchunkX, newchunkY);
+                }
+                v2_playerChunk.x++;
+                break;
+
+            case direction.South:
+                for (int i = 0; i < i_playerzoneSize; i++)
+                {
+                    for (int j = i_playerzoneSize - 1; j > 0; j--)
+                    {
+                        goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(i_playerzoneSize * (j - 1)) + i];
+                    }
+                }
+                // New row
+                for (int i = 0; i < i_playerzoneSize; i++)
+                {
+                    int newchunkX = v2_playerChunk.x - zoneRatio + i;
+                    int newchunkY = v2_playerChunk.y - zoneRatio - 1;
+
+                    goA_playerZone[i] = InstandGO(newchunkX, newchunkY);
+                }
+                v2_playerChunk.y--;
+                break;
+
+            case direction.West:
+                for (int j = 0; j < i_playerzoneSize; j++)
+                {
+                    for (int i = i_playerzoneSize - 1; i > 0; i--)
+                    {
+                        goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(j * i_playerzoneSize) + i - 1];
+                    }
+                }
+                // New row
+                for (int i = 0; i < i_playerzoneSize; i++)
+                {
+                    int newchunkX = v2_playerChunk.x - zoneRatio - 1;
+                    int newchunkY = v2_playerChunk.y - zoneRatio + i;
+
+                    goA_playerZone[i * i_playerzoneSize] = InstandGO(newchunkX, newchunkY);
+                }
+                v2_playerChunk.x--;
+                break;
         }
     }
 
@@ -113,23 +164,17 @@ public class TerrainManager : MonoBehaviour
 
     void MakeInitialZone()
     {
-        goA_playerZone = new GameObject[i_playerzoneSize];
+        goA_playerZone = new GameObject[i_playerzoneSize * i_playerzoneSize];
+        int zoneRatio = (int)((i_playerzoneSize * .5f) - .5f);
 
-        // Initialize first (x*2)^2 amount of chunks
-        for (int y = -initialChunkGridSize; y < initialChunkGridSize; y++)
+        // Fill up entire playerzone with the right chunks.
+        for (int y = 0; y < i_playerzoneSize; y++)
         {
-            for (int x = -initialChunkGridSize; x < initialChunkGridSize; x++)
+            for (int x = 0; x < i_playerzoneSize; x++)
             {
-                InstandGO(x, y); //.SetActive(false);
+                goA_playerZone[x + (y * i_playerzoneSize)] = InstandGO(x - zoneRatio, y - zoneRatio);
             }
         }
-
-        goA_playerZone[3] = InstandGO(-1, 0);
-        goA_playerZone[4] = InstandGO(0, 0);
-        goA_playerZone[5] = InstandGO(1, 0);
-
-        LoadDir(1);
-        LoadDir(3);
     }
 
     GameObject InstandGO(int x, int y)
@@ -143,7 +188,7 @@ public class TerrainManager : MonoBehaviour
             // Clean up Hierarchy
             mesh.transform.parent = tf_chunkParent;
 
-            // Update List
+            // Update dictionairy of visited chunks. 
             dict_VisitedChunks.Add(chunk, mesh);
 
             return mesh;
@@ -154,39 +199,6 @@ public class TerrainManager : MonoBehaviour
             dict_VisitedChunks[chunk].SetActive(true);
         }
         return dict_VisitedChunks[chunk];
-    }
-
-    void LoadDir(int dir)
-    {
-        switch (dir)
-        {
-            case 1:
-                goA_playerZone[6] = InstandGO(v2_playerChunk.x - 1, v2_playerChunk.y + 1);
-                goA_playerZone[7] = InstandGO(v2_playerChunk.x, v2_playerChunk.y + 1);
-                goA_playerZone[8] = InstandGO(v2_playerChunk.x + 1, v2_playerChunk.y + 1);
-                break;
-
-            case 2:
-                goA_playerZone[2] = InstandGO(v2_playerChunk.x + 1, v2_playerChunk.y - 1);
-                goA_playerZone[5] = InstandGO(v2_playerChunk.x + 1, v2_playerChunk.y);
-                goA_playerZone[8] = InstandGO(v2_playerChunk.x + 1, v2_playerChunk.y + 1);
-                break;
-
-            case 3:
-                goA_playerZone[0] = InstandGO(v2_playerChunk.x - 1, v2_playerChunk.y - 1);
-                goA_playerZone[1] = InstandGO(v2_playerChunk.x, v2_playerChunk.y - 1);
-                goA_playerZone[2] = InstandGO(v2_playerChunk.x + 1, v2_playerChunk.y - 1);
-                break;
-
-            case 4:
-                goA_playerZone[0] = InstandGO(v2_playerChunk.x - 1, v2_playerChunk.y - 1);
-                goA_playerZone[3] = InstandGO(v2_playerChunk.x - 1, v2_playerChunk.y);
-                goA_playerZone[6] = InstandGO(v2_playerChunk.x - 1, v2_playerChunk.y + 1);
-                break;
-
-            default:
-                break;
-        }
     }
 
     Vector3 ChunkToPos(Vector2Int chunk, bool WorldOffset)
