@@ -13,12 +13,13 @@ public class TerrainManager : MonoBehaviour
     public int i_terrainSizeX;
     public int i_terrainSizeY, i_worldOffset;
     public float f_scaleMeter, f_playerStartHeight;
-    public int initialChunkGridSize;
 
-    [Header("Other"), SerializeField]
-    private Vector2Int v2_playerChunk;
-    public Vector2Int v2_playerStartingchunk; // cant be changed yet
+    [Header("Other")]
     public int i_playerzoneSize;
+    public bool b_saveMeshes = true;
+    [SerializeField] private Vector2Int v2_playerChunk;
+    public Vector2Int v2_playerStartingchunk; // cant be changed yet
+    
 
     Transform tf_player;
     GameObject[] goA_playerZone;
@@ -71,12 +72,14 @@ public class TerrainManager : MonoBehaviour
     void UpdateZone(direction dir)
     {
         int zoneRatio = (int)(i_playerzoneSize * .5f - .5f);
+        Vector2Int newChunk;
         switch (dir)
         {
             case direction.North:
                 // Shift contents of all zones 1 zone down starting at the bottem left and skipping the upper row.
                 for (int i = 0; i < i_playerzoneSize; i++)
                 {
+                    ProcessLeftChunks(goA_playerZone[i]);
                     for (int j = 0; j < i_playerzoneSize - 1; j++)
                     {
                         goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(i_playerzoneSize * (j + 1)) + i];
@@ -85,10 +88,8 @@ public class TerrainManager : MonoBehaviour
                 // Add the new row of chunks to the skipped upper zones, creating a new land. 
                 for (int i = 0; i < i_playerzoneSize; i++)
                 {
-                    int newchunkX = v2_playerChunk.x - zoneRatio + i;
-                    int newchunkY = v2_playerChunk.y + zoneRatio + 1;
-
-                    goA_playerZone[((i_playerzoneSize * i_playerzoneSize) - i_playerzoneSize) + i] = InstandGO(newchunkX, newchunkY);
+                    newChunk = new Vector2Int(v2_playerChunk.x - zoneRatio + i, v2_playerChunk.y + zoneRatio + 1);
+                    goA_playerZone[((i_playerzoneSize * i_playerzoneSize) - i_playerzoneSize) + i] = InstandGO(newChunk.x, newChunk.y);
                 }
                 v2_playerChunk.y++;
                 break;
@@ -96,6 +97,7 @@ public class TerrainManager : MonoBehaviour
             case direction.East:
                 for (int j = 0; j < i_playerzoneSize; j++)
                 {
+                    ProcessLeftChunks(goA_playerZone[j * i_playerzoneSize]);
                     for (int i = 0; i < i_playerzoneSize - 1; i++)
                     {
                         goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(j * i_playerzoneSize) + i + 1];
@@ -104,10 +106,8 @@ public class TerrainManager : MonoBehaviour
                 // New row
                 for (int i = 0; i < i_playerzoneSize; i++)
                 {
-                    int newchunkX = v2_playerChunk.x + zoneRatio + 1;
-                    int newchunkY = v2_playerChunk.y - zoneRatio + i;
-
-                    goA_playerZone[(i_playerzoneSize - 1) + (i * i_playerzoneSize)] = InstandGO(newchunkX, newchunkY);
+                    newChunk = new Vector2Int(v2_playerChunk.x + zoneRatio + 1, v2_playerChunk.y - zoneRatio + i);
+                    goA_playerZone[(i_playerzoneSize - 1) + (i * i_playerzoneSize)] = InstandGO(newChunk.x, newChunk.y);
                 }
                 v2_playerChunk.x++;
                 break;
@@ -115,6 +115,7 @@ public class TerrainManager : MonoBehaviour
             case direction.South:
                 for (int i = 0; i < i_playerzoneSize; i++)
                 {
+                    ProcessLeftChunks(goA_playerZone[((i_playerzoneSize * i_playerzoneSize) - i_playerzoneSize) + i]);
                     for (int j = i_playerzoneSize - 1; j > 0; j--)
                     {
                         goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(i_playerzoneSize * (j - 1)) + i];
@@ -123,10 +124,8 @@ public class TerrainManager : MonoBehaviour
                 // New row
                 for (int i = 0; i < i_playerzoneSize; i++)
                 {
-                    int newchunkX = v2_playerChunk.x - zoneRatio + i;
-                    int newchunkY = v2_playerChunk.y - zoneRatio - 1;
-
-                    goA_playerZone[i] = InstandGO(newchunkX, newchunkY);
+                    newChunk = new Vector2Int(v2_playerChunk.x - zoneRatio + i, v2_playerChunk.y - zoneRatio - 1);
+                    goA_playerZone[i] = InstandGO(newChunk.x, newChunk.y);
                 }
                 v2_playerChunk.y--;
                 break;
@@ -134,6 +133,7 @@ public class TerrainManager : MonoBehaviour
             case direction.West:
                 for (int j = 0; j < i_playerzoneSize; j++)
                 {
+                    ProcessLeftChunks(goA_playerZone[(i_playerzoneSize - 1) + (j * i_playerzoneSize)]);
                     for (int i = i_playerzoneSize - 1; i > 0; i--)
                     {
                         goA_playerZone[(j * i_playerzoneSize) + i] = goA_playerZone[(j * i_playerzoneSize) + i - 1];
@@ -142,13 +142,23 @@ public class TerrainManager : MonoBehaviour
                 // New row
                 for (int i = 0; i < i_playerzoneSize; i++)
                 {
-                    int newchunkX = v2_playerChunk.x - zoneRatio - 1;
-                    int newchunkY = v2_playerChunk.y - zoneRatio + i;
-
-                    goA_playerZone[i * i_playerzoneSize] = InstandGO(newchunkX, newchunkY);
+                    newChunk = new Vector2Int(v2_playerChunk.x - zoneRatio - 1, v2_playerChunk.y - zoneRatio + i);
+                    goA_playerZone[i * i_playerzoneSize] = InstandGO(newChunk.x, newChunk.y);
                 }
                 v2_playerChunk.x--;
                 break;
+        }
+    }
+
+    void ProcessLeftChunks(GameObject chunk)
+    {
+        if (b_saveMeshes)
+        {
+            chunk.SetActive(false);
+        }
+        else
+        {
+            Destroy(chunk);
         }
     }
 
@@ -180,7 +190,7 @@ public class TerrainManager : MonoBehaviour
     GameObject InstandGO(int x, int y)
     {
         Vector2Int chunk = new Vector2Int(x, y);
-        if (!dict_VisitedChunks.ContainsKey(chunk))
+        if ((b_saveMeshes && !dict_VisitedChunks.ContainsKey(chunk)) || !b_saveMeshes)
         {
             GameObject mesh = Instantiate(go_dessert1, new Vector3(0 + (i_terrainSizeX * f_scaleMeter * (x + i_worldOffset)), 0, 0 + (i_terrainSizeY * f_scaleMeter * (y + i_worldOffset))), Quaternion.identity) as GameObject;
             mesh.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, x + i_worldOffset, y + i_worldOffset, f_scaleMeter);
@@ -188,8 +198,11 @@ public class TerrainManager : MonoBehaviour
             // Clean up Hierarchy
             mesh.transform.parent = tf_chunkParent;
 
-            // Update dictionairy of visited chunks. 
-            dict_VisitedChunks.Add(chunk, mesh);
+            if (b_saveMeshes)
+            {
+                // Update dictionairy of visited chunks. 
+                dict_VisitedChunks.Add(chunk, mesh);
+            }
 
             return mesh;
         }
