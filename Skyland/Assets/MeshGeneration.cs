@@ -48,7 +48,6 @@ public class MeshGeneration : MonoBehaviour
         CreateMesh();
         UpdateMesh();
     }
-
     void CreateMesh()
     {
         v3A_vertices = new Vector3[(i_sizeX + 1) * (i_sizeY + 1)];

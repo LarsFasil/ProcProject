@@ -156,13 +156,13 @@ MonoBehaviour:
   tf_chunkParent: {fileID: 1207223494}
   i_terrainSizeX: 10
   i_terrainSizeY: 10
-  i_worldOffset: 15
   f_scaleMeter: 10
+  i_worldOffset: 10
+  i_playerzoneSize: 11
   f_playerStartHeight: 55
-  v2_playerChunk: {x: 0, y: 0}
   v2_playerStartingchunk: {x: 0, y: 0}
-  i_playerzoneSize: 50
   b_saveMeshes: 0
+  v2_playerChunk: {x: 0, y: 0}
 --- !u!4 &1200334909
 Transform:
   m_ObjectHideFlags: 0

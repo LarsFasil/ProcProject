@@ -11,15 +11,18 @@ public class TerrainManager : MonoBehaviour
 
     [Header("Terrain")]
     public int i_terrainSizeX;
-    public int i_terrainSizeY, i_worldOffset;
-    public float f_scaleMeter, f_playerStartHeight;
+    public int i_terrainSizeY;
+    public float f_scaleMeter;
+    public int i_worldOffset;
+
+    [Header("Player")]
+    public int i_playerzoneSize;
+    public float f_playerStartHeight;
+    public Vector2Int v2_playerStartingchunk;
 
     [Header("Other")]
-    public int i_playerzoneSize;
     public bool b_saveMeshes = true;
-    [SerializeField] private Vector2Int v2_playerChunk;
-    public Vector2Int v2_playerStartingchunk; // cant be changed yet
-    
+    public Vector2Int v2_playerChunk;
 
     Transform tf_player;
     GameObject[] goA_playerZone;
@@ -182,7 +185,7 @@ public class TerrainManager : MonoBehaviour
         {
             for (int x = 0; x < i_playerzoneSize; x++)
             {
-                goA_playerZone[x + (y * i_playerzoneSize)] = InstandGO(x - zoneRatio, y - zoneRatio);
+                goA_playerZone[x + (y * i_playerzoneSize)] = InstandGO(v2_playerStartingchunk.x + x - zoneRatio, v2_playerStartingchunk.y + y - zoneRatio);
             }
         }
     }
