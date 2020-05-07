@@ -11,16 +11,16 @@ public class MeshGeneration : MonoBehaviour
 
     MeshCollider meshcollider;
 
-    [Range(0.0f, 10.0f)]
-    public float perlinMultiplier, mountainMult;
-    [Range(0.0f, 1.0f)]
-    public float perlinreductor;
-    [Range(0, 100)]
-    public int mountainPercentage;
+    public MeshVars cs_meshVars;
 
-    public bool refresh = false;
-    public bool gizmos = false;
-    [SerializeField]
+
+    float perlinMultiplier, mountainMult;
+    float perlinreductor;
+    int mountainPercentage;
+
+    bool refresh = false;
+    bool gizmos = false;
+
     int i_sizeX, i_sizeY, i_chunkX, i_chunkY;
     float f_scale;
 
@@ -45,6 +45,7 @@ public class MeshGeneration : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
         meshcollider = GetComponent<MeshCollider>();
 
+        ImportMeshVars();
         CreateMesh();
         UpdateMesh();
     }
@@ -148,6 +149,19 @@ public class MeshGeneration : MonoBehaviour
         mesh.uv = v2A_uv;
 
         meshcollider.sharedMesh = mesh;
+    }
+
+    void ImportMeshVars()
+    {
+        cs_meshVars = GameObject.Find("ScriptManager").GetComponent<MeshVars>();
+        perlinMultiplier = cs_meshVars.perlinMultiplier;
+        mountainMult = cs_meshVars.mountainMult;
+
+        perlinreductor = cs_meshVars.perlinreductor;
+        mountainPercentage = cs_meshVars.mountainPercentage;
+
+        refresh = cs_meshVars.refresh;
+        gizmos = cs_meshVars.gizmos;
     }
 
     private void OnDrawGizmos()
