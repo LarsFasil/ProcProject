@@ -10,9 +10,8 @@ public class MeshGeneration : MonoBehaviour
     Vector2[] v2A_uv;
 
     MeshCollider meshcollider;
-
-    public MeshVars cs_meshVars;
-
+    MeshVars cs_meshVars;
+    public GameObject go_scriptmanager;
 
     float perlinMultiplier, mountainMult;
     float perlinreductor;
@@ -49,6 +48,27 @@ public class MeshGeneration : MonoBehaviour
         CreateMesh();
         UpdateMesh();
     }
+
+    public void Init(int sx, int sy, float scale)
+    {
+        i_sizeX = sx;
+        i_sizeY = sy;
+
+        f_scale = scale;
+
+        mountainMult = 0;
+
+        //transform.localScale = new Vector3(scale, scale, scale);
+
+        mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = mesh;
+        meshcollider = GetComponent<MeshCollider>();
+
+        ImportMeshVars();
+        CreateMesh();
+        UpdateMesh();
+    }
+
     void CreateMesh()
     {
         v3A_vertices = new Vector3[(i_sizeX + 1) * (i_sizeY + 1)];
@@ -153,7 +173,7 @@ public class MeshGeneration : MonoBehaviour
 
     void ImportMeshVars()
     {
-        cs_meshVars = GameObject.Find("ScriptManager").GetComponent<MeshVars>();
+        cs_meshVars = go_scriptmanager.GetComponent<MeshVars>();
         perlinMultiplier = cs_meshVars.perlinMultiplier;
         mountainMult = cs_meshVars.mountainMult;
 

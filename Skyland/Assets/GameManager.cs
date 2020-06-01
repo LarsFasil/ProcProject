@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    TerrainManager cs_terrainManager;
+    public int StoredChunks;
     void Start()
     {
-        
+        cs_terrainManager = GetComponent<TerrainManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        StoredChunks = cs_terrainManager.dict_VisitedChunks.Count;
+        cs_terrainManager.ReloadChunks();
+        cs_terrainManager.TrackPlayer();
     }
+
 }

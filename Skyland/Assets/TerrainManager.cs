@@ -23,14 +23,20 @@ public class TerrainManager : MonoBehaviour
     [Header("Other")]
     public bool b_saveMeshes = true;
     public Vector2Int v2_playerChunk;
+    public bool reload = false;
 
     Transform tf_player;
     GameObject[] goA_playerZone;
-    Dictionary<Vector2Int, GameObject> dict_VisitedChunks = new Dictionary<Vector2Int, GameObject>();
+    public Dictionary<Vector2Int, GameObject> dict_VisitedChunks = new Dictionary<Vector2Int, GameObject>();
 
     enum direction { North, East, South, West };
 
     void Start()
+    {
+        init();
+    }
+
+    void init()
     {
         if (i_playerzoneSize % 2 == 0)
         {
@@ -40,12 +46,7 @@ public class TerrainManager : MonoBehaviour
         MakeInitialZone();
     }
 
-    void Update()
-    {
-        TrackPlayer();
-    }
-
-    void TrackPlayer()
+    public void TrackPlayer()
     {
         float ppX = tf_player.position.x;
         float ppY = tf_player.position.z;
@@ -244,5 +245,22 @@ public class TerrainManager : MonoBehaviour
             pos.y += calcOffset;
         }
         return pos;
+    }
+
+    public void ReloadChunks()
+    {
+        if (reload)
+        {
+            foreach (KeyValuePair<Vector2Int, GameObject> kvp in dict_VisitedChunks)
+            {
+                //kvp.Value.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, f_scaleMeter);
+                Object.Destroy(kvp.Value);
+            }
+            dict_VisitedChunks.Clear();
+            Destroy(tf_player.gameObject);
+            init();
+            reload = false;
+        }
+
     }
 }

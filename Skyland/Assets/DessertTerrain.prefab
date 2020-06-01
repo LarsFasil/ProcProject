@@ -92,12 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb881b807e935d4f88d5a98ba40b9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perlinMultiplier: 3
-  mountainMult: 2
-  perlinreductor: 0.05
-  mountainPercentage: 5
-  refresh: 0
-  gizmos: 0
+  go_scriptmanager: {fileID: 4066736770387376955, guid: d11aa18685ef0334d982e43718818e89,
+    type: 3}
   yield: 0.1
 --- !u!64 &6656380443480621517
 MeshCollider:
