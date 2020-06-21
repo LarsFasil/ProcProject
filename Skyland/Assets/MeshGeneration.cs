@@ -11,7 +11,6 @@ public class MeshGeneration : MonoBehaviour
 
     MeshCollider meshcollider;
     MeshVars cs_meshVars;
-    public GameObject go_scriptmanager;
 
     float perlinMultiplier, mountainMult;
     float perlinreductor;
@@ -26,7 +25,7 @@ public class MeshGeneration : MonoBehaviour
 
     public float yield;
 
-    public void Init(int sx, int sy, int cx, int cy, float scale)
+    public void Init(int sx, int sy, int cx, int cy, float scale, MeshVars MV)
     {
         i_sizeX = sx;
         i_sizeY = sy;
@@ -35,6 +34,8 @@ public class MeshGeneration : MonoBehaviour
         i_chunkY = cy;
 
         f_scale = scale;
+
+        cs_meshVars = MV;
 
         mountainMult = 0;
 
@@ -49,12 +50,14 @@ public class MeshGeneration : MonoBehaviour
         UpdateMesh();
     }
 
-    public void Init(int sx, int sy, float scale)
+    public void Init(int sx, int sy, float scale, MeshVars MV)
     {
         i_sizeX = sx;
         i_sizeY = sy;
 
         f_scale = scale;
+
+        cs_meshVars = MV;
 
         mountainMult = 0;
 
@@ -173,7 +176,6 @@ public class MeshGeneration : MonoBehaviour
 
     void ImportMeshVars()
     {
-        cs_meshVars = go_scriptmanager.GetComponent<MeshVars>();
         perlinMultiplier = cs_meshVars.perlinMultiplier;
         mountainMult = cs_meshVars.mountainMult;
 
@@ -182,6 +184,8 @@ public class MeshGeneration : MonoBehaviour
 
         refresh = cs_meshVars.refresh;
         gizmos = cs_meshVars.gizmos;
+
+        Debug.Log("prelin mult " + cs_meshVars.perlinMultiplier);
     }
 
     private void OnDrawGizmos()

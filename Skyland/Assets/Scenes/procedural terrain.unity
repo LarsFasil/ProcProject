@@ -298,6 +298,16 @@ PrefabInstance:
       propertyPath: b_saveMeshes
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376956, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_terrainSizeX
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376956, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_terrainSizeY
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4066736770387376957, guid: d11aa18685ef0334d982e43718818e89,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -352,6 +362,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: mountainMult
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: perlinMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: perlinreductor
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: mountainPercentage
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d11aa18685ef0334d982e43718818e89, type: 3}

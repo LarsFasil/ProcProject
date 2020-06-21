@@ -11,6 +11,5 @@ public class MeshVars : MonoBehaviour
     [Range(0, 100)]
     public int mountainPercentage;
 
-    public bool refresh = false;
     public bool gizmos = false;
 }

@@ -23,7 +23,7 @@ public class TerrainManager : MonoBehaviour
     [Header("Other")]
     public bool b_saveMeshes = true;
     public Vector2Int v2_playerChunk;
-    public bool reload = false;
+    MeshVars cs_meshVars;
 
     Transform tf_player;
     GameObject[] goA_playerZone;
@@ -33,6 +33,7 @@ public class TerrainManager : MonoBehaviour
 
     void Start()
     {
+        cs_meshVars = GetComponent<MeshVars>();
         init();
     }
 
@@ -197,7 +198,7 @@ public class TerrainManager : MonoBehaviour
         if ((b_saveMeshes && !dict_VisitedChunks.ContainsKey(chunk)) || !b_saveMeshes)
         {
             GameObject mesh = Instantiate(go_dessert1, new Vector3(0 + (i_terrainSizeX * f_scaleMeter * (x + i_worldOffset)), 0, 0 + (i_terrainSizeY * f_scaleMeter * (y + i_worldOffset))), Quaternion.identity) as GameObject;
-            mesh.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, x + i_worldOffset, y + i_worldOffset, f_scaleMeter);
+            mesh.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, x + i_worldOffset, y + i_worldOffset, f_scaleMeter,cs_meshVars);
 
             // Clean up Hierarchy
             mesh.transform.parent = tf_chunkParent;
@@ -249,18 +250,13 @@ public class TerrainManager : MonoBehaviour
 
     public void ReloadChunks()
     {
-        if (reload)
+        foreach (KeyValuePair<Vector2Int, GameObject> kvp in dict_VisitedChunks)
         {
-            foreach (KeyValuePair<Vector2Int, GameObject> kvp in dict_VisitedChunks)
-            {
-                //kvp.Value.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, f_scaleMeter);
-                Object.Destroy(kvp.Value);
-            }
-            dict_VisitedChunks.Clear();
-            Destroy(tf_player.gameObject);
-            init();
-            reload = false;
+            //kvp.Value.GetComponent<MeshGeneration>().Init(i_terrainSizeX, i_terrainSizeY, f_scaleMeter);
+            Object.Destroy(kvp.Value);
         }
-
+        dict_VisitedChunks.Clear();
+        Destroy(tf_player.gameObject);
+        init();
     }
 }

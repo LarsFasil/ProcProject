@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     TerrainManager cs_terrainManager;
     public int StoredChunks;
+    public bool Reload = false
+        ;
     void Start()
     {
         cs_terrainManager = GetComponent<TerrainManager>();
@@ -14,7 +16,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         StoredChunks = cs_terrainManager.dict_VisitedChunks.Count;
-        cs_terrainManager.ReloadChunks();
+        if (Reload)
+        {
+            cs_terrainManager.ReloadChunks();
+            Reload = false;
+        }
         cs_terrainManager.TrackPlayer();
     }
 
