@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 2
   m_FogDensity: 0.002
@@ -120,36 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1190404128
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1190404129}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1190404129
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190404128}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1052.7339, y: -127.79736, z: 987.64136}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1207223493
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +241,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1716350222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4066736770387376955, guid: d11aa18685ef0334d982e43718818e89,
+    type: 3}
+  m_PrefabInstance: {fileID: 4066736769389744896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1716350223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716350222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb881b807e935d4f88d5a98ba40b9f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yield: 0
 --- !u!1001 &4066736769389744896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -306,6 +295,27 @@ PrefabInstance:
     - target: {fileID: 4066736770387376956, guid: d11aa18685ef0334d982e43718818e89,
         type: 3}
       propertyPath: i_terrainSizeY
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376956, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: go_playerPrefab
+      value: 
+      objectReference: {fileID: 7275598781989803966, guid: c52fa863ddfedcd438ea1cb905cd5d81,
+        type: 3}
+    - target: {fileID: 4066736770387376956, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: f_scaleMeter
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376956, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_chunkQuality
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376956, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_chunkSize
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4066736770387376957, guid: d11aa18685ef0334d982e43718818e89,
@@ -366,22 +376,52 @@ PrefabInstance:
     - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
         type: 3}
       propertyPath: mountainMult
-      value: 0.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
         type: 3}
       propertyPath: perlinMultiplier
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
         type: 3}
       propertyPath: perlinreductor
-      value: 0.14
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
         type: 3}
       propertyPath: mountainPercentage
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_chunkSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_chunkQuality
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_worldOffset
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_playerzoneSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: f_playerStartHeight
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066736770387376959, guid: d11aa18685ef0334d982e43718818e89,
+        type: 3}
+      propertyPath: i_chunkRatio
+      value: 320
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d11aa18685ef0334d982e43718818e89, type: 3}
