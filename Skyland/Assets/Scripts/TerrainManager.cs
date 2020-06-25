@@ -47,7 +47,7 @@ public class TerrainManager : MonoBehaviour
         {
             i_playerzoneSize++;
         }
-        initializePlayer();
+        InitializePlayer();
         MakeInitialZone();
     }
 
@@ -171,7 +171,7 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
-    void initializePlayer()
+    void InitializePlayer()
     {
         // Instantiate the player on the startingchunk position.
         GameObject player = Instantiate(go_playerPrefab, ChunkToPos(v2_playerStartingchunk, true), Quaternion.identity) as GameObject;

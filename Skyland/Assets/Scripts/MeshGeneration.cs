@@ -13,8 +13,9 @@ public class MeshGeneration : MonoBehaviour
     MeshVars cs_meshVars;
 
     float perlinMultiplier;
+    float perlinMultiplier2;
     float perlinreductor;
-    int mountainPercentage;
+    int mountainPercentage,i_seed;
 
     int i_chunkSize, i_chunkX, i_chunkY;
     float f_scale;
@@ -61,7 +62,7 @@ public class MeshGeneration : MonoBehaviour
             for (int x = 0; x <= i_chunkSize; x++)
             {
 
-                p = Mathf.PerlinNoise(((i_chunkSize * i_chunkX) + x) * perlinreductor, ((i_chunkSize * i_chunkY) + y) * perlinreductor) * (perlinMultiplier * f_scale); //* (Mathf.Sin(Time.time) + 1));
+                p = Mathf.PerlinNoise(((i_chunkSize * i_chunkX) + x) * perlinreductor, ((i_chunkSize * i_chunkY) + y) * perlinreductor) * (perlinMultiplier*perlinMultiplier2);// * f_scale); //* (Mathf.Sin(Time.time) + 1));    
                 v3A_vertices[i] = new Vector3(x * f_scale, p, y * f_scale);
                 v2A_uv[i] = new Vector2(x / (float)i_chunkSize, y / (float)i_chunkSize);
                 i++;
@@ -109,7 +110,9 @@ public class MeshGeneration : MonoBehaviour
     void GetMeshVars()
     {
         perlinMultiplier = cs_meshVars.perlinMultiplier;
+        perlinMultiplier2 = cs_meshVars.perlinMultiplier2;
         perlinreductor = cs_meshVars.perlinreductor;
+        i_seed = cs_meshVars.i_seed;
 
         i_chunkSize = cs_meshVars.i_chunkSize;
         f_scale = cs_meshVars.i_chunkRatio / cs_meshVars.i_chunkSize;
