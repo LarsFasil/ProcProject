@@ -20,9 +20,6 @@ public class MeshGeneration : MonoBehaviour
     int i_chunkSize, i_chunkX, i_chunkY;
     float f_scale;
 
-
-    public float yield;
-
     public MeshGeneration(int cx, int cy, MeshVars MV, MeshFilter MF, MeshCollider MC)
     {
         cs_meshVars = MV;

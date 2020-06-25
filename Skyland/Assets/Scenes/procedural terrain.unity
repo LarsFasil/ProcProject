@@ -273,7 +273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb881b807e935d4f88d5a98ba40b9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yield: 0
 --- !u!114 &1716350224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,15 +285,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5975a3fba4d624d48aa2b61ebdcc1244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perlinMultiplier: 65
+  perlinMultiplier: 79
   perlinMultiplier2: 2.2
   perlinreductor: 0.02
   i_seed: 20
-  i_chunkSize: 9
-  i_chunkRatio: 320
-  i_worldOffset: 10
-  i_playerzoneSize: 9
-  f_playerStartHeight: 300
+  i_chunkSize: 6
+  i_chunkRatio: 6
+  i_worldOffset: 100
+  i_playerzoneSize: 19
+  f_playerStartHeight: 150
   v2_playerStartingchunk: {x: 0, y: 0}
   b_saveMeshes: 1
 --- !u!114 &1716350225
@@ -310,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StoredChunks: 0
-  Reload: 0
+  updateMesh: 0
 --- !u!114 &1716350226
 MonoBehaviour:
   m_ObjectHideFlags: 0
