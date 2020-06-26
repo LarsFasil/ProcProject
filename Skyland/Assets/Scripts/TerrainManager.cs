@@ -26,7 +26,6 @@ public class TerrainManager : MonoBehaviour
     public Vector2Int v2_playerChunk;
     MeshVars cs_meshVars;
 
-    MeshGeneration cs_meshGen;
     Transform tf_player;
     GameObject[] goA_playerZone;
     public Dictionary<Vector2Int, GameObject> dict_VisitedChunks = new Dictionary<Vector2Int, GameObject>();
@@ -51,6 +50,7 @@ public class TerrainManager : MonoBehaviour
         MakeInitialZone();
     }
 
+    // Tracks the player every frame to check if it left the playerchunk
     public void TrackPlayer()
     {
         float ppX = tf_player.position.x;

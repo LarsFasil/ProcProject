@@ -129,6 +129,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1207223494}
+  - component: {fileID: 1207223498}
+  - component: {fileID: 1207223497}
+  - component: {fileID: 1207223495}
   m_Layer: 0
   m_Name: Chunks
   m_TagString: Untagged
@@ -150,6 +153,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1207223495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207223493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5442319c852e00144b55222437f8b4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!23 &1207223497
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207223493}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: f9a94780aa94b7c4985400ab0bedcdbb, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1207223498
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207223493}
+  m_Mesh: {fileID: 0}
 --- !u!1 &1212289462
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,17 +346,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5975a3fba4d624d48aa2b61ebdcc1244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perlinMultiplier: 79
-  perlinMultiplier2: 2.2
-  perlinreductor: 0.02
+  perlinMultiplier: 46
+  perlinMultiplier2: 1
+  perlinreductor: 0.04
   i_seed: 20
-  i_chunkSize: 6
-  i_chunkRatio: 6
-  i_worldOffset: 100
-  i_playerzoneSize: 19
-  f_playerStartHeight: 150
+  i_chunkSize: 17
+  i_chunkRatio: 17
+  i_worldOffset: 1000
+  i_playerzoneSize: 51
+  f_playerStartHeight: 100
   v2_playerStartingchunk: {x: 0, y: 0}
-  b_saveMeshes: 1
+  b_saveMeshes: 0
 --- !u!114 &1716350225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,8 +369,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef8aa18a1cc14444a9b2a7e9605ff30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  go_meshCombiner: {fileID: 1207223493}
   StoredChunks: 0
   updateMesh: 0
+  CombineMesh: 0
 --- !u!114 &1716350226
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class MeshGeneration : MonoBehaviour
     float perlinMultiplier;
     float perlinMultiplier2;
     float perlinreductor;
-    int mountainPercentage,i_seed;
+    int mountainPercentage, i_seed, i_octaves;
 
     int i_chunkSize, i_chunkX, i_chunkY;
     float f_scale;
@@ -43,29 +43,22 @@ public class MeshGeneration : MonoBehaviour
     {
         v3A_vertices = new Vector3[(i_chunkSize + 1) * (i_chunkSize + 1)];
         v2A_uv = new Vector2[(i_chunkSize + 1) * (i_chunkSize + 1)];
-        float p;
         long i = 0;
-
-        float percentageX = i_chunkSize / 100 * mountainPercentage;
-        float percentageY = i_chunkSize / 100 * mountainPercentage;
-
-        //for (int y = 0 + (i_sizeY * i_chunkY); y <= i_sizeY + (i_sizeY * i_chunkY); y++)
-        //{
-        //    for (int x = 0 + (i_sizeX * i_chunkX); x <= i_sizeX + +(i_sizeX * i_chunkX); x++)
-        //    {
 
         for (int y = 0; y <= i_chunkSize; y++)
         {
             for (int x = 0; x <= i_chunkSize; x++)
             {
+                float px = (i_chunkSize * i_chunkX + x) * perlinreductor;
+                float py = (i_chunkSize * i_chunkY + y) * perlinreductor;
 
-                p = Mathf.PerlinNoise(((i_chunkSize * i_chunkX) + x) * perlinreductor, ((i_chunkSize * i_chunkY) + y) * perlinreductor) * (perlinMultiplier*perlinMultiplier2);// * f_scale); //* (Mathf.Sin(Time.time) + 1));    
+                float p = Mathf.PerlinNoise(px, py) * (perlinMultiplier * perlinMultiplier2);    
+
                 v3A_vertices[i] = new Vector3(x * f_scale, p, y * f_scale);
                 v2A_uv[i] = new Vector2(x / (float)i_chunkSize, y / (float)i_chunkSize);
                 i++;
             }
         }
-
 
         iA_triangles = new int[i_chunkSize * i_chunkSize * 6];
 
