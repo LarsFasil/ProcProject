@@ -266,7 +266,13 @@ public class TerrainManager : MonoBehaviour
             {
                 GameObject tree = Instantiate(go_tree,mf.transform.position + i,Quaternion.identity) as GameObject;
                 tree.transform.parent = mf.transform;
+
+                tree.transform.Rotate(0,Random.value*100,0,Space.Self);
                 tree.transform.localScale *= Random.value+1.5f;
+                if (Random.value > .9999)
+                {
+                    tree.transform.localScale *= 5;
+                }
                 tree.transform.position += Vector3.up * -2;
             }
             
