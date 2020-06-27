@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         StoredChunks = cs_terrainManager.dict_VisitedChunks.Count;
         if (Input.GetKeyDown(KeyCode.D))
         {
-
+            staticbatching();
         }
         if (updateMesh)
         {
@@ -37,4 +37,13 @@ public class GameManager : MonoBehaviour
         cs_terrainManager.TrackPlayer();
     }
 
+    void staticbatching()
+    {
+        GameObject[] gos = new GameObject[go_meshCombiner.transform.childCount];
+        for (int i = 0; i < go_meshCombiner.transform.childCount; i++)
+        {
+            gos[i] = go_meshCombiner.transform.GetChild(i).gameObject;
+        }
+        StaticBatchingUtility.Combine(gos,go_meshCombiner);
+    }
 }

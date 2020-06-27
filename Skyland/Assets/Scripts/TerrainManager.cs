@@ -5,7 +5,8 @@ using UnityEngine;
 public class TerrainManager : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject go_dessert1;
+    public GameObject go_terrain;
+    public GameObject go_tree;
     public GameObject go_playerPrefab;
     public Transform tf_chunkParent;
 
@@ -201,8 +202,13 @@ public class TerrainManager : MonoBehaviour
         Vector2Int chunk = new Vector2Int(x, y);
         if ((b_saveMeshes && !dict_VisitedChunks.ContainsKey(chunk)) || !b_saveMeshes)
         {
-            GameObject go_chunk = Instantiate(go_dessert1, new Vector3(0 + (i_chunkSize * f_chunkScale * (x + i_worldOffset)), 0, 0 + (i_chunkSize * f_chunkScale * (y + i_worldOffset))), Quaternion.identity) as GameObject;
-            new MeshGeneration(x, y, cs_meshVars, go_chunk.GetComponent<MeshFilter>(), go_chunk.GetComponent<MeshCollider>());
+            // Make chunk gameobject and use meshgeneration to create the mesh
+            GameObject go_chunk = Instantiate(go_terrain, new Vector3((i_chunkSize * f_chunkScale * (x + i_worldOffset)), 0,(i_chunkSize * f_chunkScale * (y + i_worldOffset))), Quaternion.identity) as GameObject;
+            MeshFilter mf_chunk = go_chunk.GetComponent<MeshFilter>();
+            new MeshGeneration(x, y, cs_meshVars, mf_chunk, go_chunk.GetComponent<MeshCollider>());
+
+            // Plant trees
+            PlantTrees(mf_chunk);
 
             // Clean up Hierarchy
             go_chunk.transform.parent = tf_chunkParent;
@@ -250,6 +256,21 @@ public class TerrainManager : MonoBehaviour
             pos.y += calcOffset;
         }
         return pos;
+    }
+
+    void PlantTrees(MeshFilter mf)
+    {
+        foreach (Vector3 i in mf.mesh.vertices)
+        {
+            if (Random.value > .995)
+            {
+                GameObject tree = Instantiate(go_tree,mf.transform.position + i,Quaternion.identity) as GameObject;
+                tree.transform.parent = mf.transform;
+                tree.transform.localScale *= Random.value+1.5f;
+                tree.transform.position += Vector3.up * -2;
+            }
+            
+        } 
     }
 
     public void ReloadChunks()

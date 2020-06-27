@@ -348,12 +348,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perlinMultiplier: 46
   perlinMultiplier2: 1
-  perlinreductor: 0.04
+  perlinreductor: 0.02
   i_seed: 20
-  i_chunkSize: 17
-  i_chunkRatio: 17
-  i_worldOffset: 1000
-  i_playerzoneSize: 51
+  i_chunkSize: 10
+  i_chunkRatio: 20
+  i_worldOffset: 100
+  i_playerzoneSize: 41
   f_playerStartHeight: 100
   v2_playerStartingchunk: {x: 0, y: 0}
   b_saveMeshes: 0
@@ -385,8 +385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3ebef012cd8744798e5534560939fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_dessert1: {fileID: 6656380443480621522, guid: 6b2cc05bc6194c84f85c3db21ceee411,
+  go_terrain: {fileID: 6656380443480621522, guid: 6b2cc05bc6194c84f85c3db21ceee411,
     type: 3}
+  go_tree: {fileID: 191266, guid: c44bd9bdc114d4a60932c0087d9d1732, type: 3}
   go_playerPrefab: {fileID: 7275598781989803966, guid: c52fa863ddfedcd438ea1cb905cd5d81,
     type: 3}
   tf_chunkParent: {fileID: 1207223494}
