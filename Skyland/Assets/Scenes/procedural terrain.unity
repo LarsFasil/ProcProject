@@ -346,12 +346,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5975a3fba4d624d48aa2b61ebdcc1244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perlinMultiplier: 46
-  perlinMultiplier2: 1
-  perlinreductor: 0.02
+  perlinMultiplier: 72
+  perlinMultiplier2: 1.99
+  perlinreductor: 0.03
   i_seed: 20
-  i_chunkSize: 10
-  i_chunkRatio: 20
+  i_chunkSize: 5
+  i_chunkRatio: 15
   i_worldOffset: 100
   i_playerzoneSize: 41
   f_playerStartHeight: 100

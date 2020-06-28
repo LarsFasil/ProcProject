@@ -42,7 +42,7 @@ public class TerrainManager : MonoBehaviour
     void init()
     {
         GetMeshVars();
-        f_chunkScale =  i_chunkRatio / i_chunkSize;
+        f_chunkScale = i_chunkRatio / i_chunkSize;
         if (i_playerzoneSize % 2 == 0)
         {
             i_playerzoneSize++;
@@ -203,7 +203,7 @@ public class TerrainManager : MonoBehaviour
         if ((b_saveMeshes && !dict_VisitedChunks.ContainsKey(chunk)) || !b_saveMeshes)
         {
             // Make chunk gameobject and use meshgeneration to create the mesh
-            GameObject go_chunk = Instantiate(go_terrain, new Vector3((i_chunkSize * f_chunkScale * (x + i_worldOffset)), 0,(i_chunkSize * f_chunkScale * (y + i_worldOffset))), Quaternion.identity) as GameObject;
+            GameObject go_chunk = Instantiate(go_terrain, new Vector3((i_chunkSize * f_chunkScale * (x + i_worldOffset)), 0, (i_chunkSize * f_chunkScale * (y + i_worldOffset))), Quaternion.identity) as GameObject;
             MeshFilter mf_chunk = go_chunk.GetComponent<MeshFilter>();
             new MeshGeneration(x, y, cs_meshVars, mf_chunk, go_chunk.GetComponent<MeshCollider>());
 
@@ -262,21 +262,23 @@ public class TerrainManager : MonoBehaviour
     {
         foreach (Vector3 i in mf.mesh.vertices)
         {
-            if (Random.value > .995)
+            if (i.y.ToString().EndsWith("109"))
+            //if (Random.value > .995)
             {
-                GameObject tree = Instantiate(go_tree,mf.transform.position + i,Quaternion.identity) as GameObject;
+                GameObject tree = Instantiate(go_tree, mf.transform.position + i, Quaternion.identity) as GameObject;
                 tree.transform.parent = mf.transform;
 
-                tree.transform.Rotate(0,Random.value*100,0,Space.Self);
-                tree.transform.localScale *= Random.value+1.5f;
+                tree.transform.Rotate(0, Random.value * 100, 0, Space.Self);
+                tree.transform.localScale *= Random.value + 1.5f;
+                //Debug.Log(i.y.ToString());
                 if (Random.value > .9999)
                 {
                     tree.transform.localScale *= 5;
                 }
                 tree.transform.position += Vector3.up * -2;
             }
-            
-        } 
+
+        }
     }
 
     public void ReloadChunks()

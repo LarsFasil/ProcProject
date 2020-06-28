@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 6656380443480621518}
   - component: {fileID: 6656380443480621517}
   m_Layer: 0
-  m_Name: DessertTerrain
+  m_Name: Terrain_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6656380443480621519
 Transform:
