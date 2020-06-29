@@ -1,4 +1,4 @@
-﻿Shader "Unlit/ToonShader"
+﻿Shader "Unlit/CellShader"
 {
 	Properties
 	{
@@ -6,7 +6,7 @@
 		_Col("Color", COLOR) = (1,1,1,1)
 		_ShadowSen("Shadow sensitivity", Range(0.0,1.0)) = 0.3
 		_Tint("Tint", Range(0.0,1.0)) = 0.5
-		_Mult("Mutiplier", Range(0.0,1.0)) = 0.5
+		_Cont("Contrast", Range(0.0,1.0)) = 0.5
 	}
 		SubShader
 	{
@@ -40,13 +40,14 @@
 			float4 _Col;
 			float _ShadowSen;
 			float _Tint;
-			float _Mult;
+			float _Cont;
 
-			float Toon(float3 normal, float3 lightDir)
+			float CellShade(float3 normal, float3 light)
 			{
-				float NdotL = max(0.0, dot(normalize(normal), normalize(lightDir)));
+				float DotProduct = dot(normalize(normal), normalize(light));
+				if(DotProduct < 0.0) DotProduct = 0.0;
 
-				return floor(NdotL / _ShadowSen);
+				return floor(DotProduct / _ShadowSen);
 			}
 
 			v2f vert(appdata v)
@@ -63,7 +64,7 @@
 			fixed4 frag(v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
-				col *= Toon(i.worldNormal, _WorldSpaceLightPos0.xyz) * _Mult  + _Tint;
+				col *= CellShade(i.worldNormal, _WorldSpaceLightPos0.xyz) * _Cont  + _Tint;
 
 				return col * _Col;
 			}
