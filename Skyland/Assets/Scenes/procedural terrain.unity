@@ -351,9 +351,9 @@ MonoBehaviour:
   perlinreductor: 0.03
   i_seed: 20
   i_chunkSize: 5
-  i_chunkRatio: 10
+  i_chunkRatio: 20
   i_worldOffset: 100
-  i_playerzoneSize: 41
+  i_playerzoneSize: 51
   f_playerStartHeight: 100
   v2_playerStartingchunk: {x: 0, y: 0}
   b_saveMeshes: 0

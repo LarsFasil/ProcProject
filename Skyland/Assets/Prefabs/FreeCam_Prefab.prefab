@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 7275598781989803967}
   - component: {fileID: 7275598781989803965}
   - component: {fileID: 7275598781989803964}
+  - component: {fileID: -205939304692423013}
+  - component: {fileID: -3942676785732342274}
   m_Layer: 0
-  m_Name: FreeCam
+  m_Name: FreeCam_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,3 +100,29 @@ MonoBehaviour:
   _enableSpeedAcceleration: 1
   _speedAccelerationFactor: 1.5
   _initPositonButton: 114
+--- !u!114 &-205939304692423013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7275598781989803966}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba248333c47c1940aad2370c538087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postprocessMaterial: {fileID: 2100000, guid: f2028598850be794986380d549939dc6, type: 2}
+--- !u!114 &-3942676785732342274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7275598781989803966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b304598ab335a714a8e36ef56cbb9c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 75ea20e6675fe4f469e3b95f3284a404, type: 2}
