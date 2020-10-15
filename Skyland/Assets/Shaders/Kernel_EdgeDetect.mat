@@ -25,9 +25,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Divisor: 0
-    - _Height: 1042
-    - _SenTreshold: 1000
-    - _Width: 1920
+    - _Height: 639
+    - _SenTreshold: 1
+    - _Width: 1383
     m_Colors:
     - _KernelLine1: {r: -1, g: -1, b: -1, a: 1}
     - _KernelLine2: {r: -1, g: 8, b: -1, a: 1}

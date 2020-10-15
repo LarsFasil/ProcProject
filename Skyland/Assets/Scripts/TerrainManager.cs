@@ -18,6 +18,7 @@ public class TerrainManager : MonoBehaviour
     public float f_chunkScale;
 
     //Player
+    public GameObject go_player;
     int i_playerzoneSize;
     float f_playerStartHeight;
     Vector2Int v2_playerStartingchunk;
@@ -175,8 +176,8 @@ public class TerrainManager : MonoBehaviour
     void InitializePlayer()
     {
         // Instantiate the player on the startingchunk position.
-        GameObject player = Instantiate(go_playerPrefab, ChunkToPos(v2_playerStartingchunk, true), Quaternion.identity) as GameObject;
-        tf_player = player.transform;
+        go_player = Instantiate(go_playerPrefab, ChunkToPos(v2_playerStartingchunk, true), Quaternion.identity) as GameObject;
+        tf_player = go_player.transform;
 
         // Set the playerchunk to the players current chunk.
         v2_playerChunk = v2_playerStartingchunk;

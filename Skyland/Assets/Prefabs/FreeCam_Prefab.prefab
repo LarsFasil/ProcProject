@@ -97,7 +97,7 @@ MonoBehaviour:
   _enableMovement: 1
   _movementSpeed: 10
   _boostedSpeed: 50
-  _enableSpeedAcceleration: 1
+  _enableSpeedAcceleration: 0
   _speedAccelerationFactor: 1.5
   _initPositonButton: 114
 --- !u!114 &-205939304692423013

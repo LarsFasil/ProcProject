@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 1716350225}
   - component: {fileID: 1716350224}
   - component: {fileID: 1716350223}
+  - component: {fileID: 1716350228}
   m_Layer: 0
   m_Name: ScriptManager
   m_TagString: Untagged
@@ -373,6 +374,7 @@ MonoBehaviour:
   StoredChunks: 0
   updateMesh: 0
   CombineMesh: 0
+  acidValue: 47
 --- !u!114 &1716350226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,6 +394,7 @@ MonoBehaviour:
     type: 3}
   tf_chunkParent: {fileID: 1207223494}
   f_chunkScale: 0
+  go_player: {fileID: 0}
   v2_playerChunk: {x: 0, y: 0}
 --- !u!4 &1716350227
 Transform:
@@ -407,3 +410,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1716350228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716350222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0265d5018aac94391c743d2d4d3fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

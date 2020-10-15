@@ -11,10 +11,15 @@ public class GameManager : MonoBehaviour
     public bool updateMesh = false;
     public bool CombineMesh = false;
 
+    [Range(0.0f, 1000.0f)]
+    public float acidValue;
+    Material acidMat;
+
     void Start()
     {
         cs_meshCombiner = go_meshCombiner.GetComponent<MeshCombiner>();
         cs_terrainManager = GetComponent<TerrainManager>();
+        
     }
 
     void Update()
@@ -22,7 +27,10 @@ public class GameManager : MonoBehaviour
         StoredChunks = cs_terrainManager.dict_VisitedChunks.Count;
         if (Input.GetKeyDown(KeyCode.D))
         {
-            staticbatching();
+            //staticbatching();
+            acidMat = cs_terrainManager.go_player.GetComponent<PostProcessingEffect>().material;
+            acidMat.SetFloat("_SenTreshold", acidValue);
+
         }
         if (updateMesh)
         {
